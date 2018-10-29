@@ -5,10 +5,8 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.firebase.ui.database.SnapshotParser
 import com.google.firebase.database.FirebaseDatabase
 
 import kotlinx.android.synthetic.main.activity_programlist.*
@@ -17,7 +15,11 @@ import org.anderes.app.trejnado.TrainingProgram
 
 class ProgramlistActivity : AppCompatActivity() {
 
-    private val TRAINING_PROGRAM_CHILD = "trainings"
+    companion object {
+        const val TRAINING_PROGRAM_CHILD = "trainings"
+        const val PARAM_USER_ID = "USER_ID"
+    }
+
     lateinit var mFirebaseAdapter: ProgramlistAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +35,7 @@ class ProgramlistActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-        val mMessageRecyclerView = findViewById<View>(R.id.program_list_id) as RecyclerView
+        val programmRecyclerView = findViewById<View>(R.id.program_list_id) as RecyclerView
         val mLinearLayoutManager = LinearLayoutManager(this)
 
         val mFirebaseDatabaseReference = FirebaseDatabase.getInstance().reference
@@ -51,13 +53,13 @@ class ProgramlistActivity : AppCompatActivity() {
                 // If the recycler view is initially being loaded or the user is at the bottom of the list, scroll
                 // to the bottom of the list to show the newly added message.
                 if (lastVisiblePosition == -1 || positionStart >= trainingProgram - 1 && lastVisiblePosition == positionStart - 1) {
-                    mMessageRecyclerView.scrollToPosition(positionStart)
+                    programmRecyclerView.scrollToPosition(positionStart)
                 }
             }
         })
 
-        mMessageRecyclerView.layoutManager = mLinearLayoutManager
-        mMessageRecyclerView.adapter = mFirebaseAdapter
+        programmRecyclerView.layoutManager = mLinearLayoutManager
+        programmRecyclerView.adapter = mFirebaseAdapter
 
     }
 
