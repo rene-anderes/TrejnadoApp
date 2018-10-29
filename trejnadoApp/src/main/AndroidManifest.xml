@@ -23,7 +23,7 @@
         </activity>
         <activity
                 android:name="org.anderes.app.trejnado.gui.ProgramlistActivity"
-                android:label="@string/title_activity_programlist"
+                android:label="@string/programlist"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
