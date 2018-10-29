@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "707637469949",
+    "firebase_url": "https://codelab-82e5d.firebaseio.com",
+    "project_id": "codelab-82e5d",
+    "storage_bucket": "codelab-82e5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707637469949:android:8bff2ee58d3d7c8e",
+        "android_client_info": {
+          "package_name": "org.anderes.app.trejnado"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "707637469949-9s6nogn6aq7gc3m3moevck9hc3j15i0p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBHXD3BkGWO9tfUKNu0G9J9CLjmcrhQIU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
