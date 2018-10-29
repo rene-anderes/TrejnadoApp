@@ -29,6 +29,14 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="org.anderes.app.trejnado.gui.MainActivity" />
         </activity>
+        <activity
+                android:name="org.anderes.app.trejnado.gui.ProgramActivity"
+                android:label="..."
+                android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="org.anderes.app.trejnado.gui.ProgramlistActivity" />
+        </activity>
     </application>
 
 </manifest>

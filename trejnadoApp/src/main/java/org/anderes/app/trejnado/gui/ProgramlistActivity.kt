@@ -35,14 +35,6 @@ class ProgramlistActivity : AppCompatActivity() {
 
         val mMessageRecyclerView = findViewById<View>(R.id.program_list_id) as RecyclerView
         val mLinearLayoutManager = LinearLayoutManager(this)
-        //mLinearLayoutManager.stackFromEnd = true
-
-        val parser = SnapshotParser { dataSnapshot ->
-            Log.d("GUI", "key" + dataSnapshot.key)
-            val trainingProgram = dataSnapshot.getValue(TrainingProgram::class.java)
-            trainingProgram?.key = dataSnapshot.key
-            trainingProgram!!
-        }
 
         val mFirebaseDatabaseReference = FirebaseDatabase.getInstance().reference
         val trainingProgramRef = mFirebaseDatabaseReference.child(TRAINING_PROGRAM_CHILD)

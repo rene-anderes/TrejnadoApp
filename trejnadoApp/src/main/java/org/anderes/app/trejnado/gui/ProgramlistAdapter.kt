@@ -32,14 +32,13 @@ class ProgramlistAdapter(options: FirebaseRecyclerOptions<TrainingProgram>) :
         viewHolder.createDate.visibility = TextView.VISIBLE
         viewHolder.itemView.tag = model.key
         viewHolder.itemView.setOnClickListener {
-            /*
+
             val context = it.context
-            val intent = Intent(context, TrainingProgramActivity::class.java)
+            val intent = Intent(context, ProgramActivity::class.java)
             intent.putExtra("trainingProgramm", it.tag as String)
             context.startActivity(intent)
-            */
-            Snackbar.make(it, "Key: " + it.tag as String, Snackbar.LENGTH_LONG).show()
 
+            Snackbar.make(it, "Key: " + it.tag as String, Snackbar.LENGTH_LONG).show()
         }
     }
 
