@@ -54,6 +54,7 @@ class ProgramlistActivity : AppCompatActivity() {
             }
         })
 
+        //mLinearLayoutManager.reverseLayout = true
         programmRecyclerView.layoutManager = mLinearLayoutManager
         programmRecyclerView.adapter = adapter
 
