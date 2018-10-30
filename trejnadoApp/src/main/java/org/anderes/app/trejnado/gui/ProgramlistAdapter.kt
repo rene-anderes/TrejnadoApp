@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import org.anderes.app.trejnado.Constants
 import org.anderes.app.trejnado.R
 import org.anderes.app.trejnado.TrainingProgram
 
@@ -32,7 +33,7 @@ class ProgramlistAdapter(options: FirebaseRecyclerOptions<TrainingProgram>) :
         viewHolder.itemView.setOnClickListener {
             val context = it.context
             val intent = Intent(context, ProgramActivity::class.java)
-            intent.putExtra(ProgramActivity.PARAM_PROGRAM_ID, it.tag as String)
+            intent.putExtra(Constants.PARAM_PROGRAM_ID, it.tag as String)
             context.startActivity(intent)
         }
     }

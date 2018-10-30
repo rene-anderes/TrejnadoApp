@@ -10,22 +10,18 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.FirebaseDatabase
 
 import kotlinx.android.synthetic.main.activity_programlist.*
+import org.anderes.app.trejnado.Constants
 import org.anderes.app.trejnado.R
 import org.anderes.app.trejnado.TrainingProgram
 
 class ProgramlistActivity : AppCompatActivity() {
 
-    companion object {
-        const val TRAINING_PROGRAM_CHILD = "trainings"
-        const val PARAM_USER_ID = "USER_ID"
-    }
-
-    lateinit var mFirebaseAdapter: ProgramlistAdapter
+    lateinit var adapter: ProgramlistAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_programlist)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(programmlist_toolbar)
 
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -39,16 +35,16 @@ class ProgramlistActivity : AppCompatActivity() {
         val mLinearLayoutManager = LinearLayoutManager(this)
 
         val mFirebaseDatabaseReference = FirebaseDatabase.getInstance().reference
-        val trainingProgramRef = mFirebaseDatabaseReference.child(TRAINING_PROGRAM_CHILD)
+        val trainingProgramRef = mFirebaseDatabaseReference.child(Constants.TRAINING_PROGRAM_CHILD)
         val options = FirebaseRecyclerOptions.Builder<TrainingProgram>().setQuery(trainingProgramRef, TrainingProgram::class.java).build()
-        mFirebaseAdapter = ProgramlistAdapter(options)
+        adapter = ProgramlistAdapter(options)
 
 
-        mFirebaseAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
 
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
-                val trainingProgram = mFirebaseAdapter.itemCount
+                val trainingProgram = adapter.itemCount
                 val lastVisiblePosition = mLinearLayoutManager.findLastCompletelyVisibleItemPosition()
                 // If the recycler view is initially being loaded or the user is at the bottom of the list, scroll
                 // to the bottom of the list to show the newly added message.
@@ -59,17 +55,17 @@ class ProgramlistActivity : AppCompatActivity() {
         })
 
         programmRecyclerView.layoutManager = mLinearLayoutManager
-        programmRecyclerView.adapter = mFirebaseAdapter
+        programmRecyclerView.adapter = adapter
 
     }
 
     override fun onResume() {
         super.onResume()
-        mFirebaseAdapter.startListening()
+        adapter.startListening()
     }
 
     override fun onPause() {
-        mFirebaseAdapter.stopListening()
+        adapter.stopListening()
         super.onPause()
     }
 }
