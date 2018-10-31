@@ -1,33 +1,41 @@
 package org.anderes.app.trejnado.gui
 
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import org.anderes.app.trejnado.R
 
-class SettinglistAdapter: RecyclerView.Adapter<SettinglistAdapter.SettingViewHolder> {
-    constructor()
+class SettinglistAdapter(val settings: Map<String, String>) :
+    RecyclerView.Adapter<SettinglistAdapter.SettingViewHolder>() {
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): SettinglistAdapter.SettingViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    val data = settings.toList()
+
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): SettinglistAdapter.SettingViewHolder {
+
+        val itemView = LayoutInflater.from(viewGroup.context).inflate(R.layout.machine_setting_item, viewGroup, false)
+        return SettinglistAdapter.SettingViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return data.size
     }
 
-    override fun onBindViewHolder(p0: SettinglistAdapter.SettingViewHolder, p1: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onBindViewHolder(viewHolder: SettinglistAdapter.SettingViewHolder, position: Int) {
+        viewHolder.description.text = data.get(position).first
+        viewHolder.settings.text = data.get(position).second
     }
 
 
     class SettingViewHolder: RecyclerView.ViewHolder {
 
         var description: TextView
+        var settings: TextView
 
         constructor(itemView: View) : super(itemView) {
-            description = itemView.findViewById(R.id.program_machine_name_id)
+            description = itemView.findViewById(R.id.machine_setting_desc_id)
+            settings = itemView.findViewById(R.id.machine_setting_id)
         }
     }
 }

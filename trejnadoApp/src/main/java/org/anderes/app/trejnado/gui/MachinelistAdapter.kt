@@ -1,5 +1,6 @@
 package org.anderes.app.trejnado.gui
 
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,8 @@ class MachinelistAdapter(options: FirebaseRecyclerOptions<TrainingMachine>) :
     override fun onBindViewHolder(viewHolder: TrainingMachineViewHolder, position: Int, model: TrainingMachine) {
         viewHolder.machineName.text = model.name
         viewHolder.machineName.visibility = TextView.VISIBLE
+        val settinglistView: RecyclerView = viewHolder.itemView.findViewById(R.id.machine_settings_view_id)
+        settinglistView.adapter = SettinglistAdapter(model.settings)
     }
 
     class TrainingMachineViewHolder: RecyclerView.ViewHolder {

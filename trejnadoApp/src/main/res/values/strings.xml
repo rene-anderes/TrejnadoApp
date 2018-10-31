@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="machine_name">Gerätebezeichnung</string>
     <string name="programlist">Trainingsprogramme</string>
+    <string name="text_machine_settings">Geräteeinstellungen</string>
+    <string name="text_machine">Gerät</string>
 </resources>
