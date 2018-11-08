@@ -32,9 +32,7 @@
                     android:id="@+id/program_machine_name_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@android:style/TextAppearance.Material.Large"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
+                    style="@style/MachineName"
                     android:gravity="center_horizontal" android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp" android:layout_marginBottom="16dp"/>
             <View
@@ -50,15 +48,8 @@
                     android:id="@+id/program_machine_settings"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp" android:paddingTop="8dp"/>
-            <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                    tools:context=".gui.ProgramActivity"
-                    tools:listitem="@layout/machine_setting_item"
-                    android:id="@+id/machine_settings_view_id" android:paddingBottom="16dp"/>
+
+            <include layout="@layout/machine_settings_view" />
 
         </LinearLayout>
 

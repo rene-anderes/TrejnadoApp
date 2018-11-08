@@ -1,5 +1,6 @@
 package org.anderes.app.trejnado.gui
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -23,6 +24,12 @@ class ProgramActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_program)
         setSupportActionBar(program_toolbar)
+
+        playSessionActionButton.setOnClickListener { view ->
+            val context = view.context
+            val intent = Intent(context, PlaySessionActivity::class.java)
+            context.startActivity(intent)
+        }
 
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

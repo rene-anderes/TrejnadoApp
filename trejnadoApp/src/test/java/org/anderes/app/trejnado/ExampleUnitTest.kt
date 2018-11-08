@@ -16,7 +16,7 @@ import java.util.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        val dateLong = LocalDate.of(2018, Month.OCTOBER, 5)
+        val dateLong = LocalDate.of(2018, Month.APRIL, 10)
         System.out.printf("Datum: %s - Long: %s", dateLong, dateLong.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli())
 
         assertEquals(4, 2 + 2)

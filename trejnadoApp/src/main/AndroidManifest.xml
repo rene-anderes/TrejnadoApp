@@ -12,7 +12,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name="org.anderes.app.trejnado.gui.MainActivity"
+                android:name=".gui.MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,20 +22,29 @@
             </intent-filter>
         </activity>
         <activity
-                android:name="org.anderes.app.trejnado.gui.ProgramlistActivity"
+                android:name=".gui.ProgramlistActivity"
                 android:label="@string/programlist"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="org.anderes.app.trejnado.gui.MainActivity" />
+                    android:value="org.anderes.app.trejnado.gui.MainActivity"/>
         </activity>
         <activity
-                android:name="org.anderes.app.trejnado.gui.ProgramActivity"
+                android:name=".gui.ProgramActivity"
                 android:label="..."
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="org.anderes.app.trejnado.gui.ProgramlistActivity" />
+                    android:value="org.anderes.app.trejnado.gui.ProgramlistActivity"/>
+        </activity>
+        <activity
+                android:name=".gui.PlaySessionActivity"
+                android:label="@string/title_activity_play_session"
+                android:parentActivityName=".gui.ProgramActivity"
+                android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="org.anderes.app.trejnado.gui.ProgramActivity"/>
         </activity>
     </application>
 

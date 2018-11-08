@@ -5,4 +5,9 @@
     <string name="programlist">Trainingsprogramme</string>
     <string name="text_machine_settings">Geräteeinstellungen</string>
     <string name="text_machine">Gerät</string>
+    <string name="title_activity_play_session">PlaySessionActivity</string>
+    <string name="text_weight">Gewicht</string>
+    <string name="text_time">Zeit</string>
+    <string name="text_lasttime">letztes Mal</string>
+    <string name="text_stopwatch">Stoppuhr</string>
 </resources>
