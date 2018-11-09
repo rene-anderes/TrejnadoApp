@@ -16,7 +16,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.activity_program.*
 import kotlinx.android.synthetic.main.content_play_session.*
 import org.anderes.app.trejnado.Constants
 import org.anderes.app.trejnado.TrainingProgram
@@ -59,6 +58,7 @@ class PlaySessionActivity : AppCompatActivity() {
                     val settinglistView: RecyclerView = findViewById(R.id.machine_settings_view_id)
                     settinglistView.adapter = SettinglistAdapter(trainingProgram.machines.get(programUnitNo).settings)
                     play_session_machine_id.text = trainingProgram.machines.get(programUnitNo).name
+                    fab.isEnabled = programUnitNo >= trainingProgram.machines.size - 1
                 }
 
             })
