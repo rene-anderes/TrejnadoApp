@@ -21,20 +21,21 @@
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent" android:paddingLeft="16dp" android:paddingRight="16dp"
+                android:paddingTop="16dp" android:paddingBottom="16dp">
             <TextView
                     android:text="@string/text_machine"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/textView" android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp" android:gravity="left" android:layout_marginBottom="0dp"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_height="wrap_content" android:id="@+id/textView"
+                    android:gravity="left"
+            />
             <TextView
                     android:id="@+id/program_machine_name_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/MachineName"
-                    android:gravity="center_horizontal" android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp" android:layout_marginBottom="16dp"/>
+                    android:gravity="center_horizontal"
+                    android:layout_marginBottom="16dp"/>
             <View
                     android:id="@+id/divider2"
                     android:layout_width="match_parent"
@@ -46,10 +47,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/program_machine_settings"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp" android:paddingTop="8dp"/>
+                    android:paddingTop="8dp"/>
 
-            <include layout="@layout/machine_settings_view" />
+            <include layout="@layout/machine_settings_view"/>
 
         </LinearLayout>
 
