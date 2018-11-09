@@ -7,6 +7,7 @@ class Constants {
         const val TRAINING_PROGRAM_MACHINE_SEQ_CHILD = "sequenceNo"
         const val PARAM_USER_ID = "USER_ID"
         const val PARAM_PROGRAM_ID = "PROGRAM_ID"
-        const val PARAM_PROGRAM_UNIT_NO = "UNIT_NO"
+        const val PARAM_PROGRAM_SESSION_ID = "SESSION_ID"
+        const val PARAM_PROGRAM_SESSION_UNIT_NO = "UNIT_NO"
     }
 }

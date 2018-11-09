@@ -26,7 +26,7 @@ class ProgramlistActivity : AppCompatActivity() {
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        fab.setOnClickListener { view ->
+        programlist_add.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }

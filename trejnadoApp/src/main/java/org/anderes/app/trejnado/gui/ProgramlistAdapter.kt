@@ -30,10 +30,10 @@ class ProgramlistAdapter(options: FirebaseRecyclerOptions<TrainingProgram>) :
         viewHolder.createDate.text = model.getCreateDateAsFormattedString()
         viewHolder.createDate.visibility = TextView.VISIBLE
         viewHolder.itemView.tag = model.key
-        viewHolder.itemView.setOnClickListener {
-            val context = it.context
+        viewHolder.itemView.setOnClickListener { view ->
+            val context = view.context
             val intent = Intent(context, ProgramActivity::class.java)
-            intent.putExtra(Constants.PARAM_PROGRAM_ID, it.tag as String)
+            intent.putExtra(Constants.PARAM_PROGRAM_ID, view.tag as String)
             context.startActivity(intent)
         }
     }

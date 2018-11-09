@@ -32,7 +32,8 @@ class ProgramActivity : AppCompatActivity() {
             val context = view.context
             val intent = Intent(context, PlaySessionActivity::class.java)
             intent.putExtra(Constants.PARAM_PROGRAM_ID, programId)
-            intent.putExtra(Constants.PARAM_PROGRAM_UNIT_NO, 0)
+            intent.putExtra(Constants.PARAM_PROGRAM_SESSION_ID, "uuid-434324-00002")
+            intent.putExtra(Constants.PARAM_PROGRAM_SESSION_UNIT_NO, 0)
             context.startActivity(intent)
         }
 

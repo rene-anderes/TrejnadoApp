@@ -26,4 +26,8 @@ class TrainingProgram {
         return format.format(createDate)
     }
 
+    @Exclude
+    fun findSessionById(sessionId: String): TrainingSession? {
+        return sessions.find { session -> session.id.equals(sessionId) }
+    }
 }
