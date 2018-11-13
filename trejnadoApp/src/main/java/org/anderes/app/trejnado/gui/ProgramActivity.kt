@@ -46,17 +46,21 @@ class ProgramActivity : AppCompatActivity(),
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         programId = intent.getStringExtra(Constants.PARAM_PROGRAM_ID)
-        val machinelistRecyclerView = findViewById<View>(R.id.machine_list_id) as RecyclerView
-        val mLinearLayoutManager = LinearLayoutManager(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         val machinesRef = databaseRef.child(Constants.TRAINING_PROGRAM_CHILD)
-                                    .child(programId)
-                                    .child(Constants.TRAINING_PROGRAM_MACHINE_CHILD)
-                                    .orderByChild(Constants.TRAINING_PROGRAM_MACHINE_SEQ_CHILD)
+            .child(programId)
+            .child(Constants.TRAINING_PROGRAM_MACHINE_CHILD)
+            .orderByChild(Constants.TRAINING_PROGRAM_MACHINE_SEQ_CHILD)
 
         val options = FirebaseRecyclerOptions.Builder<TrainingMachine>().setQuery(machinesRef, TrainingMachine::class.java).build()
         adapter = MachinelistAdapter(options)
 
+        val machinelistRecyclerView = findViewById<View>(R.id.machine_list_id) as RecyclerView
+        val mLinearLayoutManager = LinearLayoutManager(this)
         machinelistRecyclerView.layoutManager = mLinearLayoutManager
         machinelistRecyclerView.adapter = adapter
 
@@ -75,11 +79,7 @@ class ProgramActivity : AppCompatActivity(),
 
                 }
             })
-    }
 
-
-    override fun onResume() {
-        super.onResume()
         adapter.startListening()
     }
 

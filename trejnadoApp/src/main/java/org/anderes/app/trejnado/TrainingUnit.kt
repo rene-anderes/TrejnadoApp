@@ -5,9 +5,9 @@ import com.google.firebase.database.IgnoreExtraProperties
 @IgnoreExtraProperties
 class TrainingUnit {
 
-    var machine: TrainingMachine? = null
-    var weight: Int = 0
-    var duration: Int = 0
+    lateinit var machine: TrainingMachine
+    var weight: String = Constants.NO_DATA
+    var duration: String = Constants.NO_DATA
 
     constructor()
 }

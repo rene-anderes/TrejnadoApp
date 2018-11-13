@@ -46,7 +46,6 @@ class PlaySessionActivity : AppCompatActivity(),
         val lastTime = findViewById<TextView>(R.id.play_session_lasttime)
         val lastWight = findViewById<TextView>(R.id.play_session_lastwight)
 
-
         play_session_next.setOnClickListener { view ->
             navigateToUnit(programUnitNo + 1, view)
         }
@@ -81,8 +80,8 @@ class PlaySessionActivity : AppCompatActivity(),
                     play_session_toolbar.title = trainingProgram.name
                     val settinglistView: RecyclerView = findViewById(R.id.machine_settings_view_id)
                     val session = trainingProgram.findSessionById(sessionId)!!
-                    settinglistView.adapter = SettinglistAdapter(session.units[programUnitNo].machine!!.settings)
-                    play_session_machine_id.text =session.units[programUnitNo].machine!!.name
+                    settinglistView.adapter = SettinglistAdapter(session.units[programUnitNo].machine.settings)
+                    play_session_machine_id.text =session.units[programUnitNo].machine.name
                     val playNext = findViewById<ImageButton>(R.id.play_session_next)
                     if (isLastUnit()) {
                         playNext.visibility = View.INVISIBLE
@@ -96,13 +95,13 @@ class PlaySessionActivity : AppCompatActivity(),
                     } else {
                         playPrev.visibility = View.VISIBLE
                     }
-                    lastTime.text = findLastTimeByMachineName(session.units[programUnitNo].machine?.name!!)
-                    lastWight.text = findLastWightByMachineName(session.units[programUnitNo].machine?.name!!)
+                    lastTime.text = findLastTimeByMachineName(session.units[programUnitNo].machine.name!!)
+                    lastWight.text = findLastWightByMachineName(session.units[programUnitNo].machine.name!!)
                     time.text = session.units[programUnitNo].duration.toString()
-                    if (session.units[programUnitNo].weight <= 0) {
+                    if (session.units[programUnitNo].weight == Constants.NO_DATA && lastWight.text != Constants.NO_DATA) {
                         wight.text = lastWight.text
                     } else {
-                        wight.text = session.units[programUnitNo].weight.toString()
+                        wight.text = session.units[programUnitNo].weight
                     }
 
                 }
@@ -123,29 +122,30 @@ class PlaySessionActivity : AppCompatActivity(),
     }
 
     private fun findLastWightByMachineName(name: String): String {
-        for (s in trainingProgram.sessions.iterator()) {
+        for (s in trainingProgram.sessions.sortedWith(compareByDescending { it.trainingDate })) {
             if (s.id == sessionId) {
                 continue
             }
-            val find = s.units.firstOrNull { u -> u.machine?.name.equals(name) }
+            val find = s.units.firstOrNull { u -> u.machine.name.equals(name) }
             if (find != null) {
                 return find.weight.toString()
             }
         }
-        return "ND"
+        return Constants.NO_DATA
     }
 
     private fun findLastTimeByMachineName(name: String): String {
-        for (s in trainingProgram.sessions.iterator()) {
+        val sortedList = trainingProgram.sessions.sortedWith(compareByDescending { it.trainingDate })
+        for (s in sortedList.iterator()) {
             if (s.id == sessionId) {
                 continue
             }
-            val find = s.units.firstOrNull { u -> u.machine?.name.equals(name) }
+            val find = s.units.firstOrNull { u -> u.machine.name.equals(name) }
             if (find != null) {
                 return find.duration.toString()
             }
         }
-        return "ND"
+        return Constants.NO_DATA
     }
 
 
@@ -189,8 +189,8 @@ class PlaySessionActivity : AppCompatActivity(),
 
     private fun saveTrainingSession() {
         val session = trainingProgram.findSessionById(sessionId)!!
-        session.units[programUnitNo].duration = Integer.parseInt(time.text.toString())
-        session.units[programUnitNo].weight = Integer.parseInt(wight.text.toString())
+        session.units[programUnitNo].duration = time.text.toString()
+        session.units[programUnitNo].weight = wight.text.toString()
         databaseRef.child(Constants.TRAINING_PROGRAM_CHILD)
             .child(trainingProgram.key!!)
             .setValue(trainingProgram)

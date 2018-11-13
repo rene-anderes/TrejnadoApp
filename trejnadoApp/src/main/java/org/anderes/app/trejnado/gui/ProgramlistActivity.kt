@@ -30,15 +30,17 @@ class ProgramlistActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+    }
 
-        val programmRecyclerView = findViewById<View>(R.id.program_list_id) as RecyclerView
+    override fun onResume() {
+        super.onResume()
+        val programRecyclerView = findViewById<View>(R.id.program_list_id) as RecyclerView
         val mLinearLayoutManager = LinearLayoutManager(this)
 
         val mFirebaseDatabaseReference = FirebaseDatabase.getInstance().reference
         val trainingProgramRef = mFirebaseDatabaseReference.child(Constants.TRAINING_PROGRAM_CHILD)
         val options = FirebaseRecyclerOptions.Builder<TrainingProgram>().setQuery(trainingProgramRef, TrainingProgram::class.java).build()
         adapter = ProgramlistAdapter(options)
-
 
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
 
@@ -49,19 +51,14 @@ class ProgramlistActivity : AppCompatActivity() {
                 // If the recycler view is initially being loaded or the user is at the bottom of the list, scroll
                 // to the bottom of the list to show the newly added message.
                 if (lastVisiblePosition == -1 || positionStart >= trainingProgram - 1 && lastVisiblePosition == positionStart - 1) {
-                    programmRecyclerView.scrollToPosition(positionStart)
+                    programRecyclerView.scrollToPosition(positionStart)
                 }
             }
         })
 
         //mLinearLayoutManager.reverseLayout = true
-        programmRecyclerView.layoutManager = mLinearLayoutManager
-        programmRecyclerView.adapter = adapter
-
-    }
-
-    override fun onResume() {
-        super.onResume()
+        programRecyclerView.layoutManager = mLinearLayoutManager
+        programRecyclerView.adapter = adapter
         adapter.startListening()
     }
 
