@@ -17,14 +17,17 @@
     <style name="MachineName" parent="@android:style/TextAppearance.Material.Large">
         <item name="android:textSize">@dimen/trejnado_font_large</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/proza_libre</item>
     </style>
 
-    <style name="MachineInput" parent="@android:style/TextAppearance.Material.Large">
+    <style name="TrejnadoLarge" parent="@android:style/TextAppearance.Material.Large">
         <item name="android:textSize">@dimen/trejnado_font_large</item>
+        <item name="android:fontFamily">@font/proza_libre</item>
     </style>
 
-    <style name="MachineValues" parent="@android:style/TextAppearance.Material.Large">
+    <style name="TrejnadoLargeGray" parent="@android:style/TextAppearance.Material.Medium">
         <item name="android:textSize">@dimen/trejnado_font_large</item>
+        <item name="android:fontFamily">@font/proza_libre</item>
     </style>
 
     <style name="TrejnadoSquareButton">

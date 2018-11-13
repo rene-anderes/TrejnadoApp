@@ -13,11 +13,11 @@
                 android:text="Trainingprogramname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/programm_list_name_id"
-                style="@android:style/TextAppearance.Material.Large"/>
+                style="@style/TrejnadoLarge"/>
         <TextView
                 android:text="create date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/program_list_create_date_id"
-                style="@android:style/TextAppearance.Material.Medium"/>
+                style="@android:style/TextAppearance.Material.Medium" android:fontFamily="@font/proza_libre"/>
     </LinearLayout>
 </LinearLayout>

@@ -39,7 +39,7 @@
             android:ems="4"
             android:id="@+id/play_session_edit_wight"
             app:layout_constraintStart_toStartOf="@+id/play_session_weight_desc"
-            app:layout_constraintTop_toBottomOf="@+id/play_session_weight_desc" style="@style/MachineInput"/>
+            app:layout_constraintTop_toBottomOf="@+id/play_session_weight_desc" style="@style/TrejnadoLarge"/>
     <TextView
             android:text="@string/text_time"
             android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
             android:ems="3"
             android:id="@+id/play_session_edit_time"
             app:layout_constraintStart_toStartOf="@+id/play_session_time_desc"
-            app:layout_constraintBaseline_toBaselineOf="@+id/play_session_edit_wight" style="@style/MachineInput"
+            app:layout_constraintBaseline_toBaselineOf="@+id/play_session_edit_wight" style="@style/TrejnadoLarge"
     />
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
                                           android:id="@+id/play_session_horizontal_first"
@@ -67,17 +67,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView6"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="24dp"
             app:layout_constraintTop_toBottomOf="@+id/play_session_edit_wight"
-            app:layout_constraintStart_toStartOf="@+id/left_space"
-    />
+            app:layout_constraintStart_toStartOf="@+id/left_space"/>
     <TextView
             android:text="ND"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/play_session_lastwight"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" android:textAppearance="@style/MachineValues"
-            app:layout_constraintStart_toStartOf="@+id/left_space"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView8" android:textAppearance="@style/TrejnadoLargeGray"
+            app:layout_constraintStart_toStartOf="@+id/left_space" android:layout_marginStart="2dp"/>
     <TextView
             android:text="@string/text_weight"
             android:layout_width="wrap_content"
@@ -89,17 +88,17 @@
             android:text="@string/text_time"
             android:layout_width="wrap_content"
             android:layout_height="21dp"
-            android:id="@+id/textView9" app:layout_constraintStart_toEndOf="@+id/textView8"
-            android:layout_marginStart="32dp"
-            app:layout_constraintTop_toTopOf="@+id/textView8"/>
+            android:id="@+id/textView9"
+            app:layout_constraintStart_toStartOf="@+id/play_session_edit_time"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView8"/>
     <TextView
             android:text="ND"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/play_session_lasttime"
-            app:layout_constraintTop_toBottomOf="@+id/textView9"
-            android:textAppearance="@style/MachineValues"
-            app:layout_constraintStart_toStartOf="@+id/textView9"/>
+            android:textAppearance="@style/TrejnadoLargeGray"
+            app:layout_constraintStart_toStartOf="@+id/textView9" android:layout_marginStart="2dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/play_session_lastwight"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
                                           android:id="@+id/left_space" app:layout_constraintGuide_begin="16dp"
                                           android:orientation="vertical"/>
@@ -176,4 +175,11 @@
             app:layout_constraintTop_toTopOf="@+id/guideline"
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toStartOf="@+id/play_session_next"/>
+    <ImageView
+            android:layout_width="177dp"
+            android:layout_height="148dp" app:srcCompat="@drawable/ic_fitness"
+            android:id="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="84dp" app:layout_constraintTop_toTopOf="@+id/play_session_horizontal_first"
+    />
 </android.support.constraint.ConstraintLayout>
