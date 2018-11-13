@@ -7,33 +7,34 @@ import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import org.anderes.app.trejnado.R
 
-class DialogSessionEndFragment : DialogFragment() {
+class DialogSessionEndExistsFragment : DialogFragment() {
 
-    internal lateinit var mListener: DialogSessionEndListener
+    internal lateinit var mListener: DialogSessionEndExistListener
+    var date: String = ""
 
-    interface DialogSessionEndListener {
-        fun onSessionEndYesClick(dialog: DialogFragment)
-        fun onSessionEndNoClick(dialog: DialogFragment)
+    interface DialogSessionEndExistListener {
+        fun onSessionEndExistsYesClick(dialog: DialogFragment)
+        fun onSessionEndExistsNoClick(dialog: DialogFragment)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            mListener = context as DialogSessionEndListener
+            mListener = context as DialogSessionEndExistListener
         } catch (e: ClassCastException) {
-            throw ClassCastException((context.toString() + " must implement DialogSessionEndListener"))
+            throw ClassCastException((context.toString() + " must implement DialogSessionExistListener"))
         }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
-            builder.setMessage(R.string.text_dialog_session_end)
+            builder.setMessage(R.string.text_dialog_session_end_exists)
                 .setPositiveButton(R.string.text_yes) { dialog, id ->
-                    mListener.onSessionEndYesClick(this)
+                    mListener.onSessionEndExistsYesClick(this)
                 }
                 .setNegativeButton(R.string.text_no) { dialog, id ->
-                    mListener.onSessionEndNoClick(this)
+                    mListener.onSessionEndExistsNoClick(this)
                 }
 
             builder.create()

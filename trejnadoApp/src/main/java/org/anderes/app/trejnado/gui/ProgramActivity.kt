@@ -2,6 +2,7 @@ package org.anderes.app.trejnado.gui
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,15 +14,18 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_program.*
-import org.anderes.app.trejnado.Constants
-import org.anderes.app.trejnado.R
-import org.anderes.app.trejnado.TrainingMachine
-import org.anderes.app.trejnado.TrainingProgram
+import org.anderes.app.trejnado.*
+import org.anderes.app.trejnado.gui.dialog.DialogSessionExistsFragment
+import java.util.*
 
-class ProgramActivity : AppCompatActivity() {
+class ProgramActivity : AppCompatActivity(),
+        DialogSessionExistsFragment.DialogSessionExistListener {
 
-    lateinit var adapter: MachinelistAdapter
-    lateinit var programId: String
+    private lateinit var adapter: MachinelistAdapter
+    private lateinit var programId: String
+    private var existsPlaySession: TrainingSession? = null
+    private lateinit var trainingProgram: TrainingProgram
+    private val databaseRef = FirebaseDatabase.getInstance().reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,12 +33,13 @@ class ProgramActivity : AppCompatActivity() {
         setSupportActionBar(program_toolbar)
 
         playSessionActionButton.setOnClickListener { view ->
-            val context = view.context
-            val intent = Intent(context, PlaySessionActivity::class.java)
-            intent.putExtra(Constants.PARAM_PROGRAM_ID, programId)
-            intent.putExtra(Constants.PARAM_PROGRAM_SESSION_ID, "uuid-434324-00002")
-            intent.putExtra(Constants.PARAM_PROGRAM_SESSION_UNIT_NO, 0)
-            context.startActivity(intent)
+            if (existsPlaySession != null) {
+                val dialog = DialogSessionExistsFragment()
+                dialog.date = existsPlaySession?.getTrainingDateAsFormattedString() ?: "'no data'"
+                dialog.show(supportFragmentManager, "DialogSessionExistListener")
+            } else {
+                processNewSession()
+            }
         }
 
         // Show the Up button in the action bar.
@@ -43,7 +48,7 @@ class ProgramActivity : AppCompatActivity() {
         programId = intent.getStringExtra(Constants.PARAM_PROGRAM_ID)
         val machinelistRecyclerView = findViewById<View>(R.id.machine_list_id) as RecyclerView
         val mLinearLayoutManager = LinearLayoutManager(this)
-        val databaseRef = FirebaseDatabase.getInstance().reference
+
         val machinesRef = databaseRef.child(Constants.TRAINING_PROGRAM_CHILD)
                                     .child(programId)
                                     .child(Constants.TRAINING_PROGRAM_MACHINE_CHILD)
@@ -60,12 +65,13 @@ class ProgramActivity : AppCompatActivity() {
             .child(programId).addListenerForSingleValueEvent( object: ValueEventListener {
                 override fun onDataChange(snpashot: DataSnapshot) {
                     Log.d("GUI", "Key: " + snpashot.key)
-                    val trainingProgram = snpashot.getValue(TrainingProgram::class.java)
-                    program_toolbar.title = trainingProgram!!.name
+                    trainingProgram = snpashot.getValue(TrainingProgram::class.java)!!
+                    program_toolbar.title = trainingProgram.name
+                    existsPlaySession = existsPlaySession(trainingProgram)
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
                     program_toolbar.title = "Error: " + databaseError.message
-                    Log.w("GUI", databaseError.toException());
+                    Log.w("GUI", databaseError.toException())
 
                 }
             })
@@ -80,5 +86,47 @@ class ProgramActivity : AppCompatActivity() {
     override fun onPause() {
         adapter.stopListening()
         super.onPause()
+    }
+
+    override fun onSessionExistsYesClick(dialog: DialogFragment) {
+        val intent = Intent(this, PlaySessionActivity::class.java)
+        intent.putExtra(Constants.PARAM_PROGRAM_ID, trainingProgram.key)
+        intent.putExtra(Constants.PARAM_PROGRAM_SESSION_ID, existsPlaySession!!.id)
+        intent.putExtra(Constants.PARAM_PROGRAM_SESSION_UNIT_NO, 0)
+        startActivity(intent)
+    }
+
+    override fun onSessionExistsNoClick(dialog: DialogFragment) {
+        processNewSession()
+    }
+
+    private fun processNewSession() {
+        val newSession = TrainingSession()
+        newSession.trainingDate = Date().time
+        val sortedList = trainingProgram.machines.sortedWith(compareBy { it.sequenceNo })
+        for (m in sortedList.iterator()) {
+            val unit = TrainingUnit()
+            unit.machine = m
+            newSession.addUnit(unit)
+        }
+        trainingProgram.addSession(newSession)
+        databaseRef.child(Constants.TRAINING_PROGRAM_CHILD)
+            .child(trainingProgram.key!!)
+            .setValue(trainingProgram)
+
+        val intent = Intent(this, PlaySessionActivity::class.java)
+        intent.putExtra(Constants.PARAM_PROGRAM_ID, trainingProgram.key)
+        intent.putExtra(Constants.PARAM_PROGRAM_SESSION_ID, newSession.id)
+        intent.putExtra(Constants.PARAM_PROGRAM_SESSION_UNIT_NO, 0)
+        startActivity(intent)
+    }
+
+    private fun existsPlaySession(trainingProgram: TrainingProgram): TrainingSession? {
+        for (s in trainingProgram.sessions.iterator()) {
+            if (!s.done) {
+                return s
+            }
+        }
+        return null
     }
 }

@@ -21,7 +21,7 @@ class DialogSessionPauseFragment : DialogFragment() {
         try {
             mListener = context as DialogSessionPauseListener
         } catch (e: ClassCastException) {
-            throw ClassCastException((context.toString() + " must implement NoticeDialogListener"))
+            throw ClassCastException((context.toString() + " must implement DialogSessionPauseListener"))
         }
     }
 

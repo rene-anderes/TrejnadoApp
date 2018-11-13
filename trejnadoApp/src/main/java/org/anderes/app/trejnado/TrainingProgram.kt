@@ -22,12 +22,17 @@ class TrainingProgram {
 
     @Exclude
     fun getCreateDateAsFormattedString(): String {
-        val format = SimpleDateFormat("yyy.MM.dd")
+        val format = SimpleDateFormat("dd.MM.yyy")
         return format.format(createDate)
     }
 
     @Exclude
     fun findSessionById(sessionId: String): TrainingSession? {
         return sessions.find { session -> session.id.equals(sessionId) }
+    }
+
+    @Exclude
+    fun addSession(newSession: TrainingSession) {
+        sessions = sessions.plus(newSession)
     }
 }

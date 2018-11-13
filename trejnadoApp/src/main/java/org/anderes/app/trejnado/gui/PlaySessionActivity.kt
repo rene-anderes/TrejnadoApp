@@ -1,15 +1,10 @@
 package org.anderes.app.trejnado.gui
 
-import android.app.Dialog
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.os.Parcelable
 import android.os.SystemClock
 import android.support.v4.app.DialogFragment
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -29,16 +24,16 @@ import org.anderes.app.trejnado.gui.dialog.DialogSessionEndFragment
 import org.anderes.app.trejnado.gui.dialog.DialogSessionPauseFragment
 
 
-class PlaySessionActivity() : AppCompatActivity(),
+class PlaySessionActivity : AppCompatActivity(),
             DialogSessionEndFragment.DialogSessionEndListener,
             DialogSessionPauseFragment.DialogSessionPauseListener {
 
-    var running: Boolean = false
-    var startTime: Long = 0
-    lateinit var trainingProgram: TrainingProgram
-    var sessionId: String = ""
-    var programUnitNo: Int = 0
-    val databaseRef = FirebaseDatabase.getInstance().reference
+    private var running: Boolean = false
+    private var startTime: Long = 0
+    private lateinit var trainingProgram: TrainingProgram
+    private var sessionId: String = ""
+    private var programUnitNo: Int = 0
+    private val databaseRef = FirebaseDatabase.getInstance().reference
     lateinit var time: TextView
     lateinit var wight: TextView
 
@@ -48,6 +43,9 @@ class PlaySessionActivity() : AppCompatActivity(),
         setSupportActionBar(play_session_toolbar)
         time = findViewById(R.id.play_session_edit_time)
         wight = findViewById(R.id.play_session_edit_wight)
+        val lastTime = findViewById<TextView>(R.id.play_session_lasttime)
+        val lastWight = findViewById<TextView>(R.id.play_session_lastwight)
+
 
         play_session_next.setOnClickListener { view ->
             navigateToUnit(programUnitNo + 1, view)
@@ -98,8 +96,15 @@ class PlaySessionActivity() : AppCompatActivity(),
                     } else {
                         playPrev.visibility = View.VISIBLE
                     }
+                    lastTime.text = findLastTimeByMachineName(session.units[programUnitNo].machine?.name!!)
+                    lastWight.text = findLastWightByMachineName(session.units[programUnitNo].machine?.name!!)
                     time.text = session.units[programUnitNo].duration.toString()
-                    wight.text = session.units[programUnitNo].weight.toString()
+                    if (session.units[programUnitNo].weight <= 0) {
+                        wight.text = lastWight.text
+                    } else {
+                        wight.text = session.units[programUnitNo].weight.toString()
+                    }
+
                 }
 
             })
@@ -116,6 +121,33 @@ class PlaySessionActivity() : AppCompatActivity(),
             running = !running
         }
     }
+
+    private fun findLastWightByMachineName(name: String): String {
+        for (s in trainingProgram.sessions.iterator()) {
+            if (s.id == sessionId) {
+                continue
+            }
+            val find = s.units.firstOrNull { u -> u.machine?.name.equals(name) }
+            if (find != null) {
+                return find.weight.toString()
+            }
+        }
+        return "ND"
+    }
+
+    private fun findLastTimeByMachineName(name: String): String {
+        for (s in trainingProgram.sessions.iterator()) {
+            if (s.id == sessionId) {
+                continue
+            }
+            val find = s.units.firstOrNull { u -> u.machine?.name.equals(name) }
+            if (find != null) {
+                return find.duration.toString()
+            }
+        }
+        return "ND"
+    }
+
 
     private fun isLastUnit(): Boolean {
         return programUnitNo >= trainingProgram.machines.size - 1
@@ -179,7 +211,7 @@ class PlaySessionActivity() : AppCompatActivity(),
 
     override fun onSessionPauseYesClick(dialog: DialogFragment) {
         val session: TrainingSession? = trainingProgram.findSessionById(sessionId)
-        session?.done = true
+        session?.done = false
         saveTrainingSession()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
