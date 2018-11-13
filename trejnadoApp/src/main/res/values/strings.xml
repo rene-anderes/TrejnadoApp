@@ -10,4 +10,8 @@
     <string name="text_time">Zeit</string>
     <string name="text_lasttime">letztes Mal</string>
     <string name="text_stopwatch">Stoppuhr</string>
+    <string name="text_yes">Ja</string>
+    <string name="text_no">Nein</string>
+    <string name="text_dialog_session_end">Möchtest Du die Trainingssession beenden?</string>
+    <string name="text_dialog_session_pause">Möchtest Du die Trainingssession pausieren?</string>
 </resources>

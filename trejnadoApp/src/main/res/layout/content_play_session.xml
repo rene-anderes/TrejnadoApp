@@ -34,7 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:inputType="textPersonName"
-            android:text="100"
+            android:selectAllOnFocus="true"
+            android:text="0"
             android:ems="4"
             android:id="@+id/play_session_edit_wight"
             app:layout_constraintStart_toStartOf="@+id/play_session_weight_desc"
@@ -50,7 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="90"
+            android:selectAllOnFocus="true"
+            android:text="0"
             android:ems="3"
             android:id="@+id/play_session_edit_time"
             app:layout_constraintStart_toStartOf="@+id/play_session_time_desc"
@@ -64,8 +66,10 @@
             android:text="@string/text_lasttime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView6" android:layout_marginTop="48dp"
-            app:layout_constraintTop_toBottomOf="@+id/play_session_edit_wight" app:layout_constraintStart_toStartOf="@+id/left_space"
+            android:id="@+id/textView6"
+            android:layout_marginTop="48dp"
+            app:layout_constraintTop_toBottomOf="@+id/play_session_edit_wight"
+            app:layout_constraintStart_toStartOf="@+id/left_space"
     />
     <TextView
             android:text="100"
@@ -100,13 +104,12 @@
                                           android:id="@+id/left_space" app:layout_constraintGuide_begin="16dp"
                                           android:orientation="vertical"/>
     <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_media_play"
+            app:srcCompat="@android:drawable/ic_media_play"
             android:id="@+id/play_session_stopwatch_button"
             app:layout_constraintStart_toEndOf="@+id/play_session_edit_time"
             android:layout_marginStart="32dp"
-            app:layout_constraintTop_toBottomOf="@+id/play_session_stopwatch_desc" android:elevation="0dp"
-            android:backgroundTint="@color/accent_material_light"/>
+            app:layout_constraintTop_toBottomOf="@+id/play_session_stopwatch_desc"
+            android:elevation="0dp" style="@style/TrejnadoSquareButton"/>
     <TextView
             android:text="@string/text_stopwatch"
             android:layout_width="wrap_content"
@@ -132,7 +135,7 @@
     <android.support.constraint.Guideline
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:layout_constraintGuide_begin="430dp" android:id="@+id/guideline"
+            android:layout_height="wrap_content" app:layout_constraintGuide_begin="445dp" android:id="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="430dp"
             app:layout_constraintStart_toStartOf="parent"/>
     <android.support.design.widget.FloatingActionButton
@@ -147,7 +150,30 @@
             android:id="@+id/play_session_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_media_next" android:layout_marginTop="16dp"
+            app:srcCompat="@android:drawable/ic_media_next"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="@+id/guideline"
-            android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"	>
+        <requestFocus/>
+    </android.support.design.widget.FloatingActionButton>
+    <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_lock_power_off"
+            android:id="@+id/play_session_end"
+            app:layout_constraintEnd_toStartOf="@+id/play_sesseion_pause"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintTop_toTopOf="@+id/play_sesseion_pause"/>
+    <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_media_pause"
+            android:id="@+id/play_sesseion_pause"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toStartOf="@+id/play_session_next"/>
 </android.support.constraint.ConstraintLayout>

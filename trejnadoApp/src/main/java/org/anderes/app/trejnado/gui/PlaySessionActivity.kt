@@ -1,9 +1,15 @@
 package org.anderes.app.trejnado.gui
 
+import android.app.Dialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Parcelable
 import android.os.SystemClock
+import android.support.v4.app.DialogFragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -18,9 +24,14 @@ import kotlinx.android.synthetic.main.content_play_session.*
 import org.anderes.app.trejnado.Constants
 import org.anderes.app.trejnado.R
 import org.anderes.app.trejnado.TrainingProgram
+import org.anderes.app.trejnado.TrainingSession
+import org.anderes.app.trejnado.gui.dialog.DialogSessionEndFragment
+import org.anderes.app.trejnado.gui.dialog.DialogSessionPauseFragment
 
 
-class PlaySessionActivity : AppCompatActivity() {
+class PlaySessionActivity() : AppCompatActivity(),
+            DialogSessionEndFragment.DialogSessionEndListener,
+            DialogSessionPauseFragment.DialogSessionPauseListener {
 
     var running: Boolean = false
     var startTime: Long = 0
@@ -46,6 +57,16 @@ class PlaySessionActivity : AppCompatActivity() {
             navigateToUnit(programUnitNo - 1, view)
         }
 
+        play_sesseion_pause.setOnClickListener { view ->
+            val dialog = DialogSessionPauseFragment()
+            dialog.show(supportFragmentManager, "DialogSessionPauseFragment")
+        }
+
+        play_session_end.setOnClickListener { view ->
+            val dialog = DialogSessionEndFragment()
+            dialog.show(supportFragmentManager, "DialogSessionEndFragment")
+        }
+
         val programId = intent.getStringExtra(Constants.PARAM_PROGRAM_ID)
         sessionId = intent.getStringExtra(Constants.PARAM_PROGRAM_SESSION_ID)
         programUnitNo = intent.getIntExtra(Constants.PARAM_PROGRAM_SESSION_UNIT_NO, 0)
@@ -64,11 +85,18 @@ class PlaySessionActivity : AppCompatActivity() {
                     val session = trainingProgram.findSessionById(sessionId)!!
                     settinglistView.adapter = SettinglistAdapter(session.units[programUnitNo].machine!!.settings)
                     play_session_machine_id.text =session.units[programUnitNo].machine!!.name
-                    play_session_next.isEnabled = programUnitNo < trainingProgram.machines.size
-                    if (programUnitNo > 0) {
-                        play_session_prev.isEnabled = true
+                    val playNext = findViewById<ImageButton>(R.id.play_session_next)
+                    if (isLastUnit()) {
+                        playNext.visibility = View.INVISIBLE
                     } else {
-                        play_session_prev.isEnabled = false
+                        playNext.visibility = View.VISIBLE
+                    }
+                    play_session_next.isEnabled = !isLastUnit()
+                    val playPrev = findViewById<ImageButton>(R.id.play_session_prev)
+                    if (isFirstUnit()) {
+                        playPrev.visibility = View.INVISIBLE
+                    } else {
+                        playPrev.visibility = View.VISIBLE
                     }
                     time.text = session.units[programUnitNo].duration.toString()
                     wight.text = session.units[programUnitNo].weight.toString()
@@ -87,6 +115,14 @@ class PlaySessionActivity : AppCompatActivity() {
             }
             running = !running
         }
+    }
+
+    private fun isLastUnit(): Boolean {
+        return programUnitNo >= trainingProgram.machines.size - 1
+    }
+
+    private fun isFirstUnit(): Boolean {
+        return programUnitNo <= 0
     }
 
     private fun runTimer() {
@@ -115,15 +151,42 @@ class PlaySessionActivity : AppCompatActivity() {
         intent.putExtra(Constants.PARAM_PROGRAM_ID, trainingProgram.key)
         intent.putExtra(Constants.PARAM_PROGRAM_SESSION_ID, sessionId)
         intent.putExtra(Constants.PARAM_PROGRAM_SESSION_UNIT_NO, targeUnitNo)
+        saveTrainingSession()
+        context.startActivity(intent)
+    }
 
-        //if (time.isDirty || wight.isDirty) {
+    private fun saveTrainingSession() {
         val session = trainingProgram.findSessionById(sessionId)!!
         session.units[programUnitNo].duration = Integer.parseInt(time.text.toString())
         session.units[programUnitNo].weight = Integer.parseInt(wight.text.toString())
         databaseRef.child(Constants.TRAINING_PROGRAM_CHILD)
             .child(trainingProgram.key!!)
             .setValue(trainingProgram)
-        //}
-        context.startActivity(intent)
+    }
+
+    override fun onSessionEndYesClick(dialog: DialogFragment) {
+        val session: TrainingSession? = trainingProgram.findSessionById(sessionId)
+        session?.done = true
+        saveTrainingSession()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onSessionEndNoClick(dialog: DialogFragment) {
+        val session: TrainingSession? = trainingProgram.findSessionById(sessionId)
+        session?.done = false
+    }
+
+    override fun onSessionPauseYesClick(dialog: DialogFragment) {
+        val session: TrainingSession? = trainingProgram.findSessionById(sessionId)
+        session?.done = true
+        saveTrainingSession()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onSessionPauseNoClick(dialog: DialogFragment) {
+        val session: TrainingSession? = trainingProgram.findSessionById(sessionId)
+        session?.done = false
     }
 }

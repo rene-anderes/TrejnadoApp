@@ -18,11 +18,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(main_toolbar)
 
-        play_session_next.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
         program_button.setOnClickListener { view ->
             startActivity(Intent(this, ProgramlistActivity::class.java))
         }

@@ -1,4 +1,5 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="trejnado_button">48dp</dimen>
     <dimen name="trejnado_font_large">24sp</dimen>
 </resources>

@@ -27,4 +27,19 @@
         <item name="android:textSize">@dimen/trejnado_font_large</item>
     </style>
 
+    <style name="TrejnadoSquareButton">
+        <item name="android:textSize">@dimen/trejnado_font_large</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:layout_width">@dimen/trejnado_button</item>
+        <item name="android:layout_height">@dimen/trejnado_button</item>
+    </style>
+    <style name="TrejnadoButton">
+        <item name="android:textSize">@dimen/trejnado_font_large</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
 </resources>
