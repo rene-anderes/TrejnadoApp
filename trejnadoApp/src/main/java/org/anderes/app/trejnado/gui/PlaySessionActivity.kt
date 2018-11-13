@@ -45,6 +45,9 @@ class PlaySessionActivity : AppCompatActivity(),
         wight = findViewById(R.id.play_session_edit_wight)
         val lastTime = findViewById<TextView>(R.id.play_session_lasttime)
         val lastWight = findViewById<TextView>(R.id.play_session_lastwight)
+        val programId = intent.getStringExtra(Constants.PARAM_PROGRAM_ID)
+        sessionId = intent.getStringExtra(Constants.PARAM_PROGRAM_SESSION_ID)
+        programUnitNo = intent.getIntExtra(Constants.PARAM_PROGRAM_SESSION_UNIT_NO, 0)
 
         play_session_next.setOnClickListener { view ->
             navigateToUnit(programUnitNo + 1, view)
@@ -54,7 +57,7 @@ class PlaySessionActivity : AppCompatActivity(),
             navigateToUnit(programUnitNo - 1, view)
         }
 
-        play_sesseion_pause.setOnClickListener {
+        play_session_pause.setOnClickListener {
             val dialog = DialogSessionPauseFragment()
             dialog.show(supportFragmentManager, "DialogSessionPauseFragment")
         }
@@ -64,10 +67,6 @@ class PlaySessionActivity : AppCompatActivity(),
             dialog.show(supportFragmentManager, "DialogSessionEndFragment")
         }
 
-        val programId = intent.getStringExtra(Constants.PARAM_PROGRAM_ID)
-        sessionId = intent.getStringExtra(Constants.PARAM_PROGRAM_SESSION_ID)
-        programUnitNo = intent.getIntExtra(Constants.PARAM_PROGRAM_SESSION_UNIT_NO, 0)
-
         databaseRef
             .child(Constants.TRAINING_PROGRAM_CHILD)
             .child(programId).addListenerForSingleValueEvent( object: ValueEventListener {
@@ -76,36 +75,8 @@ class PlaySessionActivity : AppCompatActivity(),
                 }
 
                 override fun onDataChange(snpashot: DataSnapshot) {
-                    trainingProgram = snpashot.getValue(TrainingProgram::class.java)!!
-                    play_session_toolbar.title = trainingProgram.name
-                    val settinglistView: RecyclerView = findViewById(R.id.machine_settings_view_id)
-                    val session = trainingProgram.findSessionById(sessionId)!!
-                    settinglistView.adapter = SettinglistAdapter(session.units[programUnitNo].machine.settings)
-                    play_session_machine_id.text =session.units[programUnitNo].machine.name
-                    val playNext = findViewById<ImageButton>(R.id.play_session_next)
-                    if (isLastUnit()) {
-                        playNext.visibility = View.INVISIBLE
-                    } else {
-                        playNext.visibility = View.VISIBLE
-                    }
-                    play_session_next.isEnabled = !isLastUnit()
-                    val playPrev = findViewById<ImageButton>(R.id.play_session_prev)
-                    if (isFirstUnit()) {
-                        playPrev.visibility = View.INVISIBLE
-                    } else {
-                        playPrev.visibility = View.VISIBLE
-                    }
-                    lastTime.text = findLastTimeByMachineName(session.units[programUnitNo].machine.name!!)
-                    lastWight.text = findLastWightByMachineName(session.units[programUnitNo].machine.name!!)
-                    time.text = session.units[programUnitNo].duration.toString()
-                    if (session.units[programUnitNo].weight == Constants.NO_DATA && lastWight.text != Constants.NO_DATA) {
-                        wight.text = lastWight.text
-                    } else {
-                        wight.text = session.units[programUnitNo].weight
-                    }
-
+                    processTrainingProgramSnapshot(snpashot, lastTime, lastWight)
                 }
-
             })
 
         val stopwatchButton: ImageButton = findViewById(R.id.play_session_stopwatch_button)
@@ -118,6 +89,36 @@ class PlaySessionActivity : AppCompatActivity(),
                 stopwatchButton.setImageResource(android.R.drawable.ic_media_play)
             }
             running = !running
+        }
+    }
+
+    private fun processTrainingProgramSnapshot(snpashot: DataSnapshot, lastTime: TextView, lastWight: TextView) {
+        trainingProgram = snpashot.getValue(TrainingProgram::class.java)!!
+        play_session_toolbar.title = trainingProgram.name
+        val settinglistView: RecyclerView = findViewById(R.id.machine_settings_view_id)
+        val session = trainingProgram.findSessionById(sessionId)!!
+        settinglistView.adapter = SettinglistAdapter(session.units[programUnitNo].machine.settings)
+        play_session_machine_id.text = session.units[programUnitNo].machine.name
+        val playNext = findViewById<ImageButton>(R.id.play_session_next)
+        if (isLastUnit()) {
+            playNext.visibility = View.INVISIBLE
+        } else {
+            playNext.visibility = View.VISIBLE
+        }
+        play_session_next.isEnabled = !isLastUnit()
+        val playPrev = findViewById<ImageButton>(R.id.play_session_prev)
+        if (isFirstUnit()) {
+            playPrev.visibility = View.INVISIBLE
+        } else {
+            playPrev.visibility = View.VISIBLE
+        }
+        lastTime.text = findLastTimeByMachineName(session.units[programUnitNo].machine.name!!)
+        lastWight.text = findLastWightByMachineName(session.units[programUnitNo].machine.name!!)
+        time.text = session.units[programUnitNo].duration.toString()
+        if (session.units[programUnitNo].weight == Constants.NO_DATA && lastWight.text != Constants.NO_DATA) {
+            wight.text = lastWight.text
+        } else {
+            wight.text = session.units[programUnitNo].weight
         }
     }
 
