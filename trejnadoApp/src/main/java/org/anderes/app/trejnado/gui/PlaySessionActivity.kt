@@ -34,8 +34,8 @@ class PlaySessionActivity : AppCompatActivity(),
     private var sessionId: String = ""
     private var programUnitNo: Int = 0
     private val databaseRef = FirebaseDatabase.getInstance().reference
-    lateinit var time: TextView
-    lateinit var wight: TextView
+    private lateinit var time: TextView
+    private lateinit var wight: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,7 +114,7 @@ class PlaySessionActivity : AppCompatActivity(),
         }
         lastTime.text = findLastTimeByMachineName(session.units[programUnitNo].machine.name!!)
         lastWight.text = findLastWightByMachineName(session.units[programUnitNo].machine.name!!)
-        time.text = session.units[programUnitNo].duration.toString()
+        time.text = session.units[programUnitNo].duration
         if (session.units[programUnitNo].weight == Constants.NO_DATA && lastWight.text != Constants.NO_DATA) {
             wight.text = lastWight.text
         } else {
@@ -129,7 +129,7 @@ class PlaySessionActivity : AppCompatActivity(),
             }
             val find = s.units.firstOrNull { u -> u.machine.name.equals(name) }
             if (find != null) {
-                return find.weight.toString()
+                return find.weight
             }
         }
         return Constants.NO_DATA
@@ -143,7 +143,7 @@ class PlaySessionActivity : AppCompatActivity(),
             }
             val find = s.units.firstOrNull { u -> u.machine.name.equals(name) }
             if (find != null) {
-                return find.duration.toString()
+                return find.duration
             }
         }
         return Constants.NO_DATA
