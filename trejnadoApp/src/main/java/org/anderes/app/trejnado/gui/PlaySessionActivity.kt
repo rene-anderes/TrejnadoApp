@@ -55,12 +55,12 @@ class PlaySessionActivity : AppCompatActivity(),
             navigateToUnit(programUnitNo - 1, view)
         }
 
-        play_sesseion_pause.setOnClickListener { view ->
+        play_sesseion_pause.setOnClickListener {
             val dialog = DialogSessionPauseFragment()
             dialog.show(supportFragmentManager, "DialogSessionPauseFragment")
         }
 
-        play_session_end.setOnClickListener { view ->
+        play_session_end.setOnClickListener {
             val dialog = DialogSessionEndFragment()
             dialog.show(supportFragmentManager, "DialogSessionEndFragment")
         }

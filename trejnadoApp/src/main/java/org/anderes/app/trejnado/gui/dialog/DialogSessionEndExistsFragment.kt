@@ -9,7 +9,7 @@ import org.anderes.app.trejnado.R
 
 class DialogSessionEndExistsFragment : DialogFragment() {
 
-    internal lateinit var mListener: DialogSessionEndExistListener
+    private lateinit var mListener: DialogSessionEndExistListener
     var date: String = ""
 
     interface DialogSessionEndExistListener {

@@ -32,7 +32,7 @@ class ProgramActivity : AppCompatActivity(),
         setContentView(R.layout.activity_program)
         setSupportActionBar(program_toolbar)
 
-        playSessionActionButton.setOnClickListener { view ->
+        playSessionActionButton.setOnClickListener {
             if (existsPlaySession != null) {
                 val dialog = DialogSessionExistsFragment()
                 dialog.date = existsPlaySession?.getTrainingDateAsFormattedString() ?: "'no data'"
@@ -89,11 +89,7 @@ class ProgramActivity : AppCompatActivity(),
     }
 
     override fun onSessionExistsYesClick(dialog: DialogFragment) {
-        val intent = Intent(this, PlaySessionActivity::class.java)
-        intent.putExtra(Constants.PARAM_PROGRAM_ID, trainingProgram.key)
-        intent.putExtra(Constants.PARAM_PROGRAM_SESSION_ID, existsPlaySession!!.id)
-        intent.putExtra(Constants.PARAM_PROGRAM_SESSION_UNIT_NO, 0)
-        startActivity(intent)
+        playSession(existsPlaySession!!)
     }
 
     override fun onSessionExistsNoClick(dialog: DialogFragment) {
@@ -114,9 +110,13 @@ class ProgramActivity : AppCompatActivity(),
             .child(trainingProgram.key!!)
             .setValue(trainingProgram)
 
+        playSession(newSession)
+    }
+
+    private fun playSession(session: TrainingSession) {
         val intent = Intent(this, PlaySessionActivity::class.java)
         intent.putExtra(Constants.PARAM_PROGRAM_ID, trainingProgram.key)
-        intent.putExtra(Constants.PARAM_PROGRAM_SESSION_ID, newSession.id)
+        intent.putExtra(Constants.PARAM_PROGRAM_SESSION_ID, session.id)
         intent.putExtra(Constants.PARAM_PROGRAM_SESSION_UNIT_NO, 0)
         startActivity(intent)
     }

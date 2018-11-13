@@ -9,7 +9,7 @@ import org.anderes.app.trejnado.R
 
 class DialogSessionPauseFragment : DialogFragment() {
 
-    internal lateinit var mListener: DialogSessionPauseListener
+    private lateinit var mListener: DialogSessionPauseListener
 
     interface DialogSessionPauseListener {
         fun onSessionPauseYesClick(dialog: DialogFragment)

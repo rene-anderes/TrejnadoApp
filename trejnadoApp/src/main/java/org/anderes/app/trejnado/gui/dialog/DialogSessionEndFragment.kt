@@ -9,7 +9,7 @@ import org.anderes.app.trejnado.R
 
 class DialogSessionEndFragment : DialogFragment() {
 
-    internal lateinit var mListener: DialogSessionEndListener
+    private lateinit var mListener: DialogSessionEndListener
 
     interface DialogSessionEndListener {
         fun onSessionEndYesClick(dialog: DialogFragment)
