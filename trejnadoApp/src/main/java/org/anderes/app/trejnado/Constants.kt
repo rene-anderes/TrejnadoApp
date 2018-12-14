@@ -8,6 +8,7 @@ class Constants {
         const val PARAM_USER_ID = "USER_ID"
         const val PARAM_PROGRAM_ID = "PROGRAM_ID"
         const val PARAM_PROGRAM_SESSION_ID = "SESSION_ID"
+        const val PARAM_PROGRAM_MACHINE_ID = "MACHINE_ID"
         const val PARAM_PROGRAM_SESSION_UNIT_NO = "UNIT_NO"
         const val NO_DATA = "ND"
     }

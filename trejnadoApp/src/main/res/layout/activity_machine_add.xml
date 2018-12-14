@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".gui.ProgramlistActivity">
+        tools:context=".gui.MachineAddActivity">
 
     <android.support.design.widget.AppBarLayout
             android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-                android:id="@+id/programmlist_toolbar"
+                android:id="@+id/machine_add_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
@@ -22,30 +22,16 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" android:paddingTop="4dp">
-        <android.support.v7.widget.RecyclerView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/program_list_id"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                tools:context=".gui.ProgramlistActivity"
-                tools:listitem="@layout/program_list_item"/>
-    </FrameLayout>
+    <include layout="@layout/content_machine_add"/>
 
     <android.support.design.widget.FloatingActionButton
-            android:id="@+id/programlist_add"
+            android:id="@+id/machineSettingAddButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/ic_add_white_24dp"/>
+            app:srcCompat="@drawable/ic_add_white_24dp"
+            style="@style/TrejnadoButton"/>
+
 
 </android.support.design.widget.CoordinatorLayout>

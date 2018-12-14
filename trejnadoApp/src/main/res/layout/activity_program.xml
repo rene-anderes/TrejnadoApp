@@ -45,8 +45,17 @@
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/ic_media_play"
             android:id="@+id/playSessionActionButton"
-            app:layout_anchorGravity="right|bottom"
+            app:layout_anchorGravity="top|right"
             app:layout_anchor="@+id/frameLayout"
             android:layout_margin="@dimen/fab_margin"/>
+
+    <android.support.design.widget.FloatingActionButton
+            android:id="@+id/machineAddButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/ic_add_white_24dp"
+            style="@style/TrejnadoButton"/>
 
 </android.support.design.widget.CoordinatorLayout>

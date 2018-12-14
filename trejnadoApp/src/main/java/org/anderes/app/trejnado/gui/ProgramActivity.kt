@@ -41,16 +41,22 @@ class ProgramActivity : AppCompatActivity(),
                 processNewSession()
             }
         }
+        machineAddButton.setOnClickListener {
+            val intent = Intent(this, MachineAddActivity::class.java)
+            intent.putExtra(Constants.PARAM_PROGRAM_ID, trainingProgram.key)
+            startActivity(intent)
+        }
 
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        programId = intent.getStringExtra(Constants.PARAM_PROGRAM_ID)
     }
 
     override fun onResume() {
         super.onResume()
 
+        programId = intent.getStringExtra(Constants.PARAM_PROGRAM_ID)
+        
         val machinesRef = databaseRef.child(Constants.TRAINING_PROGRAM_CHILD)
             .child(programId)
             .child(Constants.TRAINING_PROGRAM_MACHINE_CHILD)
