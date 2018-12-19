@@ -44,8 +44,9 @@ class ProgramActivity : AppCompatActivity(),
         machineAddButton.setOnClickListener {
             val intent = Intent(this, MachineAddActivity::class.java)
             intent.putExtra(Constants.PARAM_PROGRAM_ID, trainingProgram.key)
-            startActivity(intent)
+            startActivityForResult(intent, 234)
         }
+        programId = intent.getStringExtra(Constants.PARAM_PROGRAM_ID)
 
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -55,8 +56,6 @@ class ProgramActivity : AppCompatActivity(),
     override fun onResume() {
         super.onResume()
 
-        programId = intent.getStringExtra(Constants.PARAM_PROGRAM_ID)
-        
         val machinesRef = databaseRef.child(Constants.TRAINING_PROGRAM_CHILD)
             .child(programId)
             .child(Constants.TRAINING_PROGRAM_MACHINE_CHILD)
@@ -88,6 +87,11 @@ class ProgramActivity : AppCompatActivity(),
 
         adapter.startListening()
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        Log.d("GUI", requestCode.toString())
+    }
+
 
     override fun onPause() {
         adapter.stopListening()
